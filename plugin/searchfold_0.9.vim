@@ -288,16 +288,18 @@ func! SearchFold(...) "{{{1
     endif
     let nmatches = <sid>SearchFoldEnable(inverse)
     " at most one match per line counted
-    if nmatches == 0
-	echohl ErrorMsg
-	echomsg "Searchfold: Pattern not found:" @/
-	echohl none
-    elseif nmatches == line("$")
-	echomsg "Searchfold: Pattern found in every line:" @/
-    elseif nmatches == 1
-	echo "Searchfold: 1 line found"
-    else
-	echo "Searchfold:" nmatches "lines found"
+    if exists('g:SearchFoldInfoEcho') && g:SearchFoldInfoEcho
+        if nmatches == 0
+            echohl ErrorMsg
+            echomsg "Searchfold: Pattern not found:" @/
+            echohl none
+        elseif nmatches == line("$")
+            echomsg "Searchfold: Pattern found in every line:" @/
+        elseif nmatches == 1
+            echo "Searchfold: 1 line found"
+        else
+            echo "Searchfold:" nmatches "lines found"
+        endif
     endif
     " 2011 Feb 06 commented out:
     " let &hls = &hls
