@@ -241,7 +241,11 @@ func! SearchFoldRestore() "{{{1
 	    normal! zE
 	endif
     else
-	let choice = input("Revert to global fold settings? (y/[n]/(s)how):")[0]
+	if exists('g:searchFoldMayResetToGlobal') && g:searchFoldMayResetToGlobal == 0
+	    let choice = 'n'
+	else
+	    let choice = input("Revert to global fold settings? (y/[n]/(s)how):")[0]
+	endif
 	let setargs = 'fdm< fdl< fdt< fen< fml<'
 	if choice == "y"
 	    let cmd = 'setlocal '. setargs
